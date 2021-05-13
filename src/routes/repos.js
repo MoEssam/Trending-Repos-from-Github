@@ -1,6 +1,7 @@
 const express = require("express");
 const fetch = require("node-fetch");
 const router = express.Router();
+const fs = require("fs");
 
 router.get("/repos", async (req, res) => {
   const api_url =
@@ -24,7 +25,7 @@ router.get("/repos", async (req, res) => {
       return r;
     }, {})
   ).map(([language, urls]) => ({ language, urls, count: urls.length }));
-
+  fs.writeFileSync("100 trending repos.json", JSON.stringify(result, null, 2));
   res.send(result);
 });
 
